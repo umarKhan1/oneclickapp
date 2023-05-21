@@ -1,19 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
-
-import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:oneclicktravel/AboutUsScreen.dart';
 import 'package:oneclicktravel/HistoryScreen.dart';
 import 'package:oneclicktravel/HotelRoomsSelect.dart';
@@ -22,15 +16,16 @@ import 'package:oneclicktravel/Model/FetchUpdateCustomerDetails.dart';
 import 'package:oneclicktravel/Model/my_user.dart';
 import 'package:oneclicktravel/Model/selectedHotelData.dart';
 import 'package:oneclicktravel/MyScheduleProvider.dart';
-import 'package:oneclicktravel/SelectCountry.dart';
 import 'package:oneclicktravel/SettingScreen.dart';
-
 import 'package:oneclicktravel/customedate/CustomeDateScreen.dart';
 import 'package:oneclicktravel/screens/myaccount/UserProfileScreen.dart';
 import 'package:oneclicktravel/utils/ModuleName.dart';
 import 'package:oneclicktravel/utils/color_code_generator.dart';
 import 'package:oneclicktravel/utils/size_config.dart';
 import 'package:oneclicktravel/utils/strings.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'LoginScreen.dart';
@@ -115,7 +110,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                 .fetchCustomerDetails(context.read<MyUser>().email,
                     context.read<MyUser>().userid) !=
             null) {
-          final CountryListModel countryListModel = new CountryListModel();
+          final CountryListModel countryListModel = CountryListModel();
           for (int i = 0; i < countryListModel.countryList.length; i++) {
             if (countryListModel.countryList
                     .elementAt(i)['country_code']!
@@ -334,7 +329,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                         child: DrawerHeader(
                           margin: EdgeInsets.zero,
                           padding: EdgeInsets.zero,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage("assets/back.jpg"),
                                 fit: BoxFit.cover),
@@ -363,7 +358,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter)),
                       ),
-                      Positioned(
+                      /* Positioned(
                           bottom: 70,
                           left: SizeConfig.blockSizeHorizontal * 10,
                           child: Container(
@@ -378,7 +373,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                           )
                           // color: ColorCodeGen.colorFromHex('#2A4058').withOpacity(0.8),
 
-                          ),
+                          ),*/
                       context.watch<MyUser>().email == null
                           ? Positioned(
                               bottom: 16,
@@ -395,18 +390,10 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                       ));
                                 },
                                 child: Container(
-                                  child: Text(
-                                    "LOGIN",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        letterSpacing: 2,
-                                        fontWeight: FontWeight.bold),
-                                  ),
                                   width: SizeConfig.blockSizeHorizontal * 68,
                                   height: SizeConfig.blockSizeVertical * 6,
                                   alignment: Alignment.center,
-                                  decoration: new BoxDecoration(
+                                  decoration: BoxDecoration(
                                     border: Border.all(
                                       color: Colors.white,
                                       style: BorderStyle.solid,
@@ -421,6 +408,14 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                     // image: DecorationImage(
                                     //     image: AssetImage('assets/logo.png'),
                                     //     fit: BoxFit.fill),
+                                  ),
+                                  child: const Text(
+                                    "LOGIN",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        letterSpacing: 2,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
@@ -447,7 +442,8 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 8, 0, 8),
                                     child: CircleAvatar(
                                       radius: 30,
                                       child: Image.asset(
@@ -461,7 +457,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                     context.read<MyUser>().name! +
                                         ' ' +
                                         context.read<MyUser>().lname!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         // fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                         fontSize: 18),
@@ -469,7 +465,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                   ),
                                   Text(
                                     context.read<MyUser>().email!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 14),
                                   ),
                                   InkWell(
@@ -488,17 +484,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Container(
                                         height: 40.0,
-                                        child: Center(
-                                          child: Text(
-                                            'View Profile',
-                                            style: TextStyle(
-                                                letterSpacing: 0.3,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18,
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                        margin: EdgeInsets.only(top: 6.0),
+                                        margin: const EdgeInsets.only(top: 6.0),
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: Colors.white,
@@ -507,6 +493,16 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           color: Colors.transparent,
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'View Profile',
+                                            style: TextStyle(
+                                                letterSpacing: 0.3,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                color: Colors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -594,7 +590,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                       );
                     },
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
                     leading: Icon(LineIcons.cog,
                         size: 25,
@@ -698,7 +694,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                         context,
                         PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: AboutUs(),
+                          child: const AboutUs(),
                         ),
                       );
                     },
@@ -731,7 +727,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                               Container(
                                 height: 0,
                                 // width: 350,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage("assets/plane.webp"),
                                       fit: BoxFit.cover),
@@ -744,6 +740,13 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                   width: SizeConfig.screenWidth,
                                   // height: SizeConfig.screenHeight/2,
                                   height: SizeConfig.blockSizeVertical * 50,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                    image: const AssetImage(
+                                      "assets/hotel.jpg",
+                                    ),
+                                    fit: BoxFit.cover,
+                                  )),
 
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -780,7 +783,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                         type: PageTransitionType
                                                             .rightToLeft,
                                                         child:
-                                                            SearchFromHotel()));
+                                                            const SearchFromHotel()));
                                                 // setState(() {
                                                 //   hotelselecteddestination =
                                                 //       _controller.text;
@@ -834,7 +837,8 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                       6,
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsets.all(5.0),
+                                                        const EdgeInsets.all(
+                                                            5.0),
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -844,7 +848,8 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                           flex: 1,
                                                           child: Container(
                                                             margin:
-                                                                EdgeInsets.only(
+                                                                const EdgeInsets
+                                                                        .only(
                                                                     left: 10.0,
                                                                     right: 0.0),
                                                             child: Text(
@@ -853,7 +858,8 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style: TextStyle(
+                                                              style:
+                                                                  const TextStyle(
                                                                 fontSize: 16,
                                                                 color:
                                                                     Colors.grey,
@@ -864,7 +870,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                             ),
                                                           ),
                                                         ),
-                                                        Icon(
+                                                        const Icon(
                                                           Icons.search,
                                                           color: Colors.grey,
                                                         ),
@@ -879,13 +885,6 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                       ),
                                     ),
                                   ),
-                                  decoration: new BoxDecoration(
-                                      image: new DecorationImage(
-                                    image: new AssetImage(
-                                      "assets/hotel.jpg",
-                                    ),
-                                    fit: BoxFit.cover,
-                                  )),
                                 ),
                               ),
                               // SizedBox(height: 10,),
@@ -895,7 +894,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                 height: SizeConfig.blockSizeVertical * 50,
                                 child: Column(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     InkWell(
@@ -931,7 +930,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'CHECK-IN',
                                                   style: TextStyle(
                                                     color: Colors.grey,
@@ -964,16 +963,18 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                         Text(
                                                           departuredate.text
                                                               .split(' ')[1],
-                                                          style: TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             fontSize: 22,
                                                           ),
                                                         ),
                                                         Text(
                                                           departuredate.text
                                                               .split(' ')[2],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .black),
                                                         ),
                                                       ],
                                                     ),
@@ -992,7 +993,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'CHECK-OUT',
                                                   style: TextStyle(
                                                       color: Colors.grey),
@@ -1024,16 +1025,18 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                         Text(
                                                           returndate.text
                                                               .split(' ')[1],
-                                                          style: TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             fontSize: 22,
                                                           ),
                                                         ),
                                                         Text(
                                                           returndate.text
                                                               .split(' ')[2],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .black),
                                                         ),
                                                       ],
                                                     ),
@@ -1045,7 +1048,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                         ),
                                       ),
                                     ),
-                                    Divider(
+                                    const Divider(
                                       color: Colors.grey,
                                     ),
                                     InkWell(
@@ -1177,17 +1180,18 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text('Room',
+                                                  const Text('Room',
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.grey,
                                                       )),
                                                   Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 8.0),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 8.0),
                                                     child: Text(
                                                         _controllerRooms.text,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontSize: 16,
                                                           color: Colors.black,
                                                         )),
@@ -1199,7 +1203,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                         ),
                                       ),
                                     ),
-                                    Divider(
+                                    const Divider(
                                       color: Colors.grey,
                                     ),
                                     SizedBox(
@@ -1282,7 +1286,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                                                 msg: "Fill all above Field");
                                           }
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'SEARCH HOTELS',
                                           style: TextStyle(
                                               color: Colors.white,
@@ -1311,7 +1315,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                 left: 10,
                 top: 36,
                 child: IconButton(
-                  icon: Icon(Icons.menu),
+                  icon: const Icon(Icons.menu),
                   onPressed: () => scaffoldKey.currentState!.openDrawer(),
                 ),
               ),
@@ -1335,7 +1339,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                       indicatorSize: TabBarIndicatorSize.label,
                       // indicatorPadding: const EdgeInsets.all(2),
                       isScrollable: true,
-                      tabs: new List.generate(
+                      tabs: List.generate(
                         tabNames.length,
                         (index) => InkWell(
                           onTap: () {
@@ -1348,7 +1352,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                             padding: const EdgeInsets.only(bottom: 5.0),
                             child: SizedBox(
                               height: 20,
-                              child: new Tab(
+                              child: Tab(
                                 text: tabNames[index],
                               ),
                             ),
@@ -1357,7 +1361,7 @@ class HotelUIState extends State<HotelUI> with SingleTickerProviderStateMixin {
                       ),
                     ),
                   ),
-                  secondChild: new Container(),
+                  secondChild: Container(),
                   crossFadeState: _screen == 0
                       ? CrossFadeState.showFirst
                       : CrossFadeState.showSecond,
